@@ -10,18 +10,16 @@ parser = etree.XMLParser(recover=True)
 
 tree = ET.parse('./data/MovieDiC_V2.xml', parser=parser)
 root = tree.getroot()
-file = io.open('cleanedData.txt','w',encoding='utf8')
+file = io.open('cleanedData.txt', 'w', encoding='utf8')
 
 i = tree.getiterator()
 
-print('Cleanin up the data...')
+print('Cleaning up the data...')
+
 for m in i:
-    #print(m.tag)
     for di in m.findall('dialogue'):
-        #print("dialogue id: " + di.get('id'))
         for u in di.findall('utterance'):
-            utterance = u.text
             file.write(u.text + "\n")
-    #print("dialogue changes")
+
 file.close()
-print('Clean up complete!')
+print('Cleanup complete!')
