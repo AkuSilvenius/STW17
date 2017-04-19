@@ -10,7 +10,7 @@ parser = etree.XMLParser(recover=True)
 
 tree = ET.parse('./data/MovieDiC_V2.xml', parser=parser)
 root = tree.getroot()
-file = io.open('cleanedData.txt', 'w', encoding='utf8')
+file = io.open('cleanedData.txt', 'w', encoding='utf-8')
 
 i = tree.getiterator()
 
@@ -19,7 +19,7 @@ print('Cleaning up the data...')
 for m in i:
     for di in m.findall('dialogue'):
         for u in di.findall('utterance'):
-            file.write(u.text + "\n")
+            file.write(u.text + u"\n")
 
 file.close()
 print('Cleanup complete!')
