@@ -10,9 +10,10 @@ import pickle
 import gensim
 from gensim import corpora, models, similarities
 import numpy as np
-
+import os.path
 
 model = gensim.models.Word2Vec.load('wiki_sg/word2vec.bin');
+
 parser = etree.XMLParser(recover=True)
 
 tree = ET.parse('./data/MovieDiC_V2.xml', parser=parser)
@@ -53,27 +54,19 @@ print(x[11], y[11])
 tokenized_x = []
 tokenized_y = []
 
+print("Tokenizing...")
 for i in range(len(x)):
     tokenized_x.append(nltk.word_tokenize(x[i].lower()))
     tokenized_y.append(nltk.word_tokenize(y[i].lower()))
 
-
+print("Tokenization completed")
 print(tokenized_x[10], tokenized_y[10])
 print(tokenized_x[11], tokenized_y[12])
 
-sentend = np.ones(300,dtype=np.float32)
+print("Dumping data")
+output = open(os.path.join("I:/Python/", "tokenized_data.dat"), "wb")
+pickle.dump([tokenized_x, tokenized_y], output)
+#tok_x, tok_y = pickle.load(output)
+output.close()
+print("Dump complete")
 
-
-# Mitä tää tekee?? ->>
-vec_x = []
-for sent in tokenized_x:
-    sentvec = [model[w] for w in sent if w in model.vocab]
-    vec_x.append(sentvec)
-
-while True:
-    val = input("Give the sentvec: ")
-    print(vec_x[int(val)])
-    
-#output = open("data.dat", "wb")
-#pickle.dump(data, output)
-#array = pickle.load(output)
