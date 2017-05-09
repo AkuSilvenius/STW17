@@ -46,8 +46,12 @@ for i in range(len(data)):
         if j<len(data[i])-1:
             x.append(data[i][j])
             y.append(data[i][j+1])
-print(x[10], y[10])
-print(x[11], y[11])
+
+for i in range(0,50):
+    print("x[",i,"]: ", x[i])
+    print("y[",i,"]: ", y[i])
+    print("")
+
 
 # Jakaa lauseen sanoihin
 # esim.  [No, sir.] -> ['no', ',', 'sir', '.']
