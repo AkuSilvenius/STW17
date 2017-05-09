@@ -7,6 +7,9 @@ import xml.etree.ElementTree as ET
 import io
 import nltk
 import pickle
+import warnings
+warnings.filterwarnings(action='ignore', category=UserWarning, module='gensim')
+
 import gensim
 from gensim import corpora, models, similarities
 import numpy as np
