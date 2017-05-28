@@ -117,31 +117,31 @@ checkpointer2 = ModelCheckpoint(filepath="best_model_acc.hdf5", monitor='acc', v
 
 dropout = 0.1
 
-##model=Sequential()
-##
-##opt =  optimizers.SGD(lr=0.01)
-##model.add(LSTM(kernel_initializer="glorot_normal", return_sequences=True, recurrent_initializer="glorot_normal", input_shape=x_train.shape[1:], units=300, activation="relu"))
-##model.add(BatchNormalization())
-##model.add(Dropout(dropout))
-##
-##model.add(LSTM(kernel_initializer="glorot_normal", return_sequences=True, recurrent_initializer="glorot_normal", input_shape=x_train.shape[1:], units=300, activation="relu"))
-##model.add(BatchNormalization())
-##model.add(Dropout(dropout))
-##
-##model.add(LSTM(kernel_initializer="glorot_normal", return_sequences=True, recurrent_initializer="glorot_normal", input_shape=x_train.shape[1:], units=300, activation="relu"))
-##model.add(BatchNormalization())
-##model.add(Dropout(dropout))
-##
-##model.add(LSTM(kernel_initializer="glorot_normal", return_sequences=True, recurrent_initializer="glorot_normal", input_shape=x_train.shape[1:], units=300, activation="relu"))
-##model.add(BatchNormalization())
-###model.add(LSTM(output_dim=300,input_shape=x_train.shape[1:],return_sequences=True, init='glorot_normal', inner_init='glorot_normal', activation='sigmoid'))
-###model.add(LSTM(output_dim=300,input_shape=x_train.shape[1:],return_sequences=True, init='glorot_normal', inner_init='glorot_normal', activation='sigmoid'))
-###model.add(LSTM(output_dim=300,input_shape=x_train.shape[1:],return_sequences=True, init='glorot_normal', inner_init='glorot_normal', activation='sigmoid'))
-###model.add(LSTM(output_dim=300,input_shape=x_train.shape[1:],return_sequences=True, init='glorot_normal', inner_init='glorot_normal', activation='sigmoid'))
-##model.compile(loss='cosine_proximity', optimizer="adam", metrics=['accuracy'])
+model=Sequential()
+
+opt =  optimizers.SGD(lr=0.01)
+model.add(LSTM(kernel_initializer="glorot_normal", return_sequences=True, recurrent_initializer="glorot_normal", input_shape=x_train.shape[1:], units=300, activation="relu"))
+model.add(BatchNormalization())
+model.add(Dropout(dropout))
+
+model.add(LSTM(kernel_initializer="glorot_normal", return_sequences=True, recurrent_initializer="glorot_normal", input_shape=x_train.shape[1:], units=300, activation="relu"))
+model.add(BatchNormalization())
+model.add(Dropout(dropout))
+
+model.add(LSTM(kernel_initializer="glorot_normal", return_sequences=True, recurrent_initializer="glorot_normal", input_shape=x_train.shape[1:], units=300, activation="relu"))
+model.add(BatchNormalization())
+model.add(Dropout(dropout))
+
+model.add(LSTM(kernel_initializer="glorot_normal", return_sequences=True, recurrent_initializer="glorot_normal", input_shape=x_train.shape[1:], units=300, activation="relu"))
+model.add(BatchNormalization())
+#model.add(LSTM(output_dim=300,input_shape=x_train.shape[1:],return_sequences=True, init='glorot_normal', inner_init='glorot_normal', activation='sigmoid'))
+#model.add(LSTM(output_dim=300,input_shape=x_train.shape[1:],return_sequences=True, init='glorot_normal', inner_init='glorot_normal', activation='sigmoid'))
+#model.add(LSTM(output_dim=300,input_shape=x_train.shape[1:],return_sequences=True, init='glorot_normal', inner_init='glorot_normal', activation='sigmoid'))
+#model.add(LSTM(output_dim=300,input_shape=x_train.shape[1:],return_sequences=True, init='glorot_normal', inner_init='glorot_normal', activation='sigmoid'))
+model.compile(loss='cosine_proximity', optimizer="adam", metrics=['accuracy'])
 
 
-model = load_model('LSTM10000.h5')
+#model = load_model('LSTM10000.h5')
 
 b_size = 124
 epoch_size = 10
@@ -151,27 +151,10 @@ generations = 20
 for i in range(1,generations+1):
     print("i: ", i)
     model.fit(x_train, y_train, batch_size=b_size, epochs=epoch_size, validation_data=(x_test, y_test), verbose=2, callbacks=[checkpointer, checkpointer2]) #epoch originally 500
-    model.save('LSTM'+str(10000+500*i)+'.h5');
+    model.save('LSTM'+str(500*i)+'.h5');
     score = model.evaluate(x_test, y_test, verbose=0)
     print("Accuracy: %.2f%%" % (score[1]*100))
-#model.fit(x_train, y_train, batch_size=b_size, epochs=epoch_size, validation_data=(x_test, y_test))
-##model.save('LSTM1000.h5');
-##model.fit(x_train, y_train, batch_size=b_size, epochs=epoch_size, validation_data=(x_test, y_test))
-##model.save('LSTM1500.h5');
-##model.fit(x_train, y_train, batch_size=b_size, epochs=epoch_size, validation_data=(x_test, y_test))
-##model.save('LSTM2000.h5');
-##model.fit(x_train, y_train, batch_size=b_size, epochs=epoch_size, validation_data=(x_test, y_test))
-##model.save('LSTM2500.h5');
-##model.fit(x_train, y_train, batch_size=b_size, epochs=epoch_size, validation_data=(x_test, y_test))
-##model.save('LSTM3000.h5');
-##model.fit(x_train, y_train, batch_size=b_size, epochs=epoch_size, validation_data=(x_test, y_test))
-##model.save('LSTM3500.h5');
-##model.fit(x_train, y_train, batch_size=b_size, epochs=epoch_size, validation_data=(x_test, y_test))
-##model.save('LSTM4000.h5');
-##model.fit(x_train, y_train, batch_size=b_size, epochs=epoch_size, validation_data=(x_test, y_test))
-##model.save('LSTM4500.h5');
-##model.fit(x_train, y_train, batch_size=b_size, epochs=epoch_size, validation_data=(x_test, y_test))
-##model.save('LSTM5000.h5');          
+     
 predictions=model.predict(x_test) 
 mod = gensim.models.Word2Vec.load('wiki_sg/word2vec.bin');
 [mod.most_similar([predictions[10][i]])[0] for i in range(15)]
